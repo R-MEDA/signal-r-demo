@@ -15,7 +15,7 @@ In today’s world, real-time data is something users simply expect. That’s wh
 
 To help you get started quickly, the repo contains a working example of the app discussed here. You’ll find everything needed to run the app both locally and with Azure SignalR Service.
 
-![video-demo](demo-clip.mp4)
+![video-demo](./assets/demo-clip.mp4)
 ---
 
 ## Before the Age of Real-Time Apps
@@ -24,7 +24,7 @@ Before real-time apps existed, this is how apps handled data updates:
 
 * Users had to manually refresh pages a lot (hitting F5 repeatedly)
 
-![refesh-meme](image-7.png)
+![refesh-meme](./assets/cat-refreshing-browser.png)
 * Or developers set up automatic page refresh using a meta tag in the HTML head, like this:
 
 ```html
@@ -43,19 +43,19 @@ For sending real-time information, SignalR uses the following techniques, ranked
 
 The client opens a connection to the server, which holds it open until new data is available. Once the server responds, the client reconnects and waits again.
 
-![uml-diagram showing the long polling sequence](image-1.png)
+![uml-diagram showing the long polling sequence](../images/uml/1.%20long_polling_workflow.png)
 
 ### 2. Server-Sent Events (SSE)
 
 The client opens a single connection that the server keeps open, allowing the server to send multiple messages over time. Note SSE is one-way - from server to client only.
 
-![uml-diagram showing the SSE sequence](image-2.png)
+![uml-diagram showing the SSE sequence](../images/uml/2.%20server-sent_events_workflow.png)
 
 ### 3. WebSockets
 
 The client requests to upgrade the HTTP connection to a WebSocket. After acceptance, this persistent, full-duplex connection lets client and server send messages to each other anytime.
 
-![uml-diagram showing the websockets sequence](image-3.png)
+![uml-diagram showing the websockets sequence](../images/uml/3.%20websockets_workflow.png)
 
 SignalR tries WebSockets first, then SSE, and falls back to Long Polling if needed ([Docs](https://learn.microsoft.com/nl-nl/aspnet/core/signalr/introduction?view=aspnetcore-9.0&WT.mc_id=dotnet-35129-website#transports)).
 
@@ -68,7 +68,7 @@ Here’s the high-level architecture of the demo app:
 * **SignalR Hub:** Broadcasts updates to connected clients
 * **JavaScript Client:** A Vue.js app that connects to the hub and receives real-time updates
 
-![solution-design](image-4.png)
+![solution-design](../images/architecture/1.%20app_architecture.png)
 
 ## Backend (Web API) Setup
 
@@ -215,13 +215,13 @@ To simulate devices sending data to the API, I recommend checking the GitHub rep
 
 ## Scaling Challenges & Solutions
 
-![diagram-showing-scaling-bottlenecks](image-5.png)
+![diagram-showing-scaling-bottlenecks](../images/architecture/3.%20bottleneck_multi_instance_setup.png)
 
 When scaling to multiple server instances, each instance runs its own SignalR context. This means clients connected to different servers won't receive all updates.
 
 ### How to fix this: Azure SignalR Service
 
-![solution-architecture-using-azure-signalr](image-6.png)
+![solution-architecture-using-azure-signalr](../images/architecture/2.%20app_architacture_signalr_in_azure.png)
 
 Azure SignalR Service centralizes all SignalR traffic, so all server instances push messages to a shared hub managed by Azure.
 
@@ -267,11 +267,11 @@ When inspecting the WebSocket connection on the client side, you’ll notice dif
 
 * **Local setup:** The client connects directly to your local SignalR hub endpoint.
 
-  ![client-connection-locally](signalr-client-local.png)
+  ![client-connection-locally](./assets/signalr-client-local.png)
 
 * **Azure SignalR Service:** The client connection is redirected to the Azure SignalR Service endpoint, which manages the real-time messaging at scale.
 
-  ![client-connection-azure](signalr-client-azure.png)
+  ![client-connection-azure](./assets/signalr-client-azure.png)
 
 *This redirection to the Azure SignalR hub endpoint aligns with the architecture diagram and demonstrates how Azure manages connections behind the scenes.*
 
