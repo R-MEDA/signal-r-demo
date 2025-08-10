@@ -14,6 +14,7 @@ import {
 	Legend,
 	Filler,
 	ArcElement,
+	type ChartOptions,
 } from 'chart.js'
 import 'chartjs-adapter-date-fns'
 
@@ -141,7 +142,7 @@ const chartData = computed(() => {
 	return { datasets }
 })
 
-const chartOptions = computed(() => ({
+const chartOptions = computed<ChartOptions<'line'>>(() => ({
 	responsive: true,
 	maintainAspectRatio: false,
 	interaction: { mode: 'nearest', intersect: false },
