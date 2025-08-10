@@ -92,5 +92,5 @@ This project consists of three main components:
 
 ## Additional Resources
 
-* For an in-depth explanation of the architecture and implementation details, check out the article in the repository: [Article.md](.article/building-real-time-apps-using-singalr.md)
+* For an in-depth explanation of the architecture and implementation details, check out the article in the repository: [Article.md](article/building-real-time-apps-using-singalr.md)
 * Also available on LinkedIn: [TODO]()
