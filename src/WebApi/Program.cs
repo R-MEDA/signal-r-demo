@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 // Add SignalR to the service
-builder.Services.AddSignalR();
+builder.Services.AddSignalR().AddAzureSignalR("<azure-siganlr-connection-string>");
 
 builder.Services.AddCors();
 
