@@ -1,0 +1,49 @@
+@startuml
+!theme plain
+
+' Title and styling
+title WebSocket Communication Workflow
+skinparam titleFontSize 22
+skinparam titleFontColor #003366
+skinparam sequence {
+    ArrowColor #003366
+    ActorBorderColor #003366
+    ActorFontColor #003366
+    LifeLineBorderColor #003366
+    LifeLineBackgroundColor #E6F0FF
+    ParticipantBorderColor #003366
+    ParticipantBackgroundColor #F7FBFF
+    ParticipantFontColor #003366
+    NoteBackgroundColor #FFFBE6
+    NoteBorderColor #FFCC00
+}
+
+actor Client as C #99CCFF
+participant "Server\n(WebSocket Endpoint)" as S #CCCCFF
+
+== Handshake ==
+C -> S: HTTP GET /chat (Upgrade: websocket)
+note right of S
+  Server accepts upgrade  
+  and switches to WebSocket protocol.
+end note
+S --> C: HTTP 101 Switching Protocols
+
+== Full-Duplex Connection ==
+loop While connected
+    C -> S: Send message (JSON/Text/Binary)
+    S --> C: Send message (JSON/Text/Binary)
+    note over C, S
+      Messages can be sent in both directions  
+      at any time without re-establishing a connection.
+    end note
+end
+
+== Closing ==
+alt Client closes
+    C -x S: Close frame
+else Server closes
+    S -x C: Close frame
+end
+
+@enduml

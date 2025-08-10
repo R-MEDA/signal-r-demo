@@ -1,0 +1,49 @@
+@startuml
+!theme plain
+
+' Title and styling
+title Server-Sent Events (SSE) Workflow
+skinparam titleFontSize 22
+skinparam titleFontColor #003366
+skinparam sequence {
+    ArrowColor #003366
+    ActorBorderColor #003366
+    ActorFontColor #003366
+    LifeLineBorderColor #003366
+    LifeLineBackgroundColor #E6F0FF
+    ParticipantBorderColor #003366
+    ParticipantBackgroundColor #F7FBFF
+    ParticipantFontColor #003366
+    NoteBackgroundColor #FFFBE6
+    NoteBorderColor #FFCC00
+}
+
+actor Client as C #99CCFF
+participant "Server\n(Event Source)" as S #CCCCFF
+
+== Initial Connection ==
+C -> S: HTTP GET /events  
+note right of S
+  Server responds with  
+  Content-Type: text/event-stream  
+  and keeps connection open.
+end note
+S --> C: HTTP 200 OK (stream starts)
+
+== Streaming Events ==
+loop While connected
+    S --> C: event: message\ndata: {...}\n\n
+    note left of C
+      Browser's EventSource API  
+      receives messages instantly.
+    end note
+end
+
+== Connection Handling ==
+alt Client disconnects
+    C -x S: Close connection
+else Network issue
+    C -> S: Reconnect automatically
+end
+
+@enduml

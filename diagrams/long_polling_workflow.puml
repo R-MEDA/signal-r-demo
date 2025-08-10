@@ -1,0 +1,46 @@
+@startuml
+!theme plain
+
+' Title and styling
+title Long Polling Workflow
+skinparam titleFontSize 22
+skinparam titleFontColor #003366
+skinparam sequence {
+    ArrowColor #003366
+    ActorBorderColor #003366
+    ActorFontColor #003366
+    LifeLineBorderColor #003366
+    LifeLineBackgroundColor #E6F0FF
+    ParticipantBorderColor #003366
+    ParticipantBackgroundColor #F7FBFF
+    ParticipantFontColor #003366
+    NoteBackgroundColor #FFFBE6
+    NoteBorderColor #FFCC00
+}
+
+actor Client as C #99CCFF
+participant "Server\n(Backend)" as S #CCCCFF
+
+== Initial Request ==
+C -> S: Send HTTP request (GET /updates)
+note right of S
+  Server waits for new data  
+  before responding.
+end note
+
+== Response Handling ==
+alt Data available
+    S --> C: HTTP 200 + new data
+else Timeout
+    S --> C: HTTP 204 (No Content)
+end
+
+== Continuous Polling ==
+loop Until stopped
+    C -> S: Send next HTTP request
+    note right of S
+      Waits again for data or timeout
+    end note
+end
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme vibrant
+
+title IoT Weather SignalR Architecture
+skinparam titleFontSize 28
+skinparam titleFontColor #003366
+
+skinparam component {
+  FontSize 24
+  FontColor #003366
+  BorderColor #003366
+  BackgroundColor #F7FBFF
+  Padding 20
+}
+
+scale 1.5
+
+component "IoT Devices" as iot_devices #99CCFF
+component "ASP.NET Core App" as asp_net_app {
+  component "WebApi" as web_api #CCCCFF
+  component "SignalR Hub" as signalr_hub #FFCC00
+}
+component "Javascript Client" as js_client #99CCFF
+
+iot_devices --> web_api : Sends weather data
+web_api --> signalr_hub : Pushes updates
+js_client --> signalr_hub : Connects for notifications
+
+@enduml
