@@ -8,6 +8,15 @@ This project consists of three main components:
 
 ---
 
+## About This Project & Articles
+
+For an in-depth explanation of the architecture and implementation details, check out the article included in this repository:
+[building-real-time-apps-using-signalr.md](article/building-real-time-apps-using-singalr.md)
+
+Also available on LinkedIn: [TODO - Insert LinkedIn article link here]()
+
+---
+
 ## Branches
 
 ### `main`
@@ -87,10 +96,3 @@ This project consists of three main components:
    pnpm install
    pnpm dev
    ```
-
----
-
-## Additional Resources
-
-* For an in-depth explanation of the architecture and implementation details, check out the article in the repository: [Article.md](article/building-real-time-apps-using-singalr.md)
-* Also available on LinkedIn: [TODO]()
